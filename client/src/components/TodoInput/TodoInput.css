@@ -1,0 +1,17 @@
+.todo-input-container input {
+    min-width: 297px;
+    height: 40px;
+    border: none;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #435567;
+    background: transparent;
+    border-radius: 4px;
+    color: #8097af;
+    margin-right: 8px;
+}
+::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #8097af;
+    opacity: 1;
+}

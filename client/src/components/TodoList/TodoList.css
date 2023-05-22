@@ -1,0 +1,83 @@
+.completed-todo-container {
+    margin-top: 30px;
+    max-height: 500px;
+    overflow-y: auto;
+}
+.completed-todo-box {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #314251;
+}
+.box {
+    padding: 27px 61px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: #8fa8c1;
+}
+.todo-title p {
+    font-size: 16px;
+    cursor: pointer;
+}
+.todo-title s {
+    cursor: pointer;
+}
+.icons-container {
+    display: flex;
+}
+.todo-editIcon-container {
+    margin-right: 20px;
+    cursor: pointer;
+}
+.todo-deleteIcon-container {
+    cursor: pointer;
+}
+.edit-todo-container {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px dashed #314251;
+    width: 100%;
+}
+.edit-todo-container input {
+    width: 250px;
+    border: none;
+    padding: 10px;
+    outline: none;
+    border: 1px solid #435567;
+    background: transparent;
+    border-radius: 4px;
+    color: #8097af;
+    margin-right: 8px;
+}
+.edit-box {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 4px;
+    padding: 0 52px;
+}
+.edit-input {
+    min-width: 234px;
+    height: 40px;
+}
+.cancel-button {
+    color: #0c5488;
+    background: #8fa8c1;
+    width: 76px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.save-button {
+    width: 76px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    background: #0c5488;
+    color: #8fa8c1;
+    margin-right: 8px;
+}

@@ -1,0 +1,21 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Open Sans", "Helvetica Neue", sans-serif;
+}
+body {
+    min-height: 100vh;
+    width: 100%;
+    background: #1e1e1e;
+}
+#root {
+    min-height: 100vh;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url("../assets/Desktop.png");
+    background-repeat: no-repeat;
+}

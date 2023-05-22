@@ -1,0 +1,36 @@
+.todo-container {
+    width: 500px;
+    background: #152431;
+    min-height: 612px;
+    border-radius: 6px;
+    box-shadow: 18px 18px #000;
+    padding: 10px;
+}
+.todo-container h1 {
+    color: #8fa8c1;
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 36px;
+}
+.todo-input-container {
+    display: flex;
+    justify-content: center;
+}
+.todo-list-container {
+    margin-bottom: 20px;
+}
+
+.add-todo-button {
+    background: #0c5488;
+    border: none;
+    cursor: pointer;
+    color: #8fa8c1;
+    border-radius: 4px;
+    padding: 8px;
+    width: 95px;
+    height: 40px;
+    transition: 0.2s ease-in-out;
+}
+.add-todo-button:hover {
+    background: #08436d;
+}
