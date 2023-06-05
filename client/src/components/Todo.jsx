@@ -3,7 +3,6 @@ import { TodoList } from "./TodoList";
 import { useEffect, useRef, useState } from "react";
 import { TodoInput } from "./TodoInput";
 import { v4 as uuidv4 } from "uuid";
-import "react-toastify/dist/ReactToastify.css";
 
 export const Todo = () => {
     const inputTodoRef = useRef(null);
@@ -14,11 +13,6 @@ export const Todo = () => {
 
     //OnMount gets all the todos from local storage and set to todo
     useEffect(() => {
-        let dataLocalStorage = localStorage.getItem("todos");
-        let parsedData = JSON.parse(dataLocalStorage);
-        if (parsedData) {
-            setTodo(parsedData);
-        }
         inputTodoRef.current.focus();
     }, []);
 
@@ -102,7 +96,6 @@ export const Todo = () => {
         let localData = localStorage.getItem("todos");
         let parsedData = JSON.parse(localData);
         let undeleted = parsedData?.filter((todo) => todo?.id !== id);
-        localStorage.setItem("todos", JSON.stringify(undeleted));
         setTodo(undeleted);
     };
 
