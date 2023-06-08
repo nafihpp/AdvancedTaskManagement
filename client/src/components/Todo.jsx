@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { TodoInput } from "./TodoInput";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const Todo = () => {
@@ -69,15 +69,7 @@ export const Todo = () => {
     };
 
     //edit Button
-    const editTodo = (id) => {
-        setSelectedId(id);
-        let localData = localStorage.getItem("todos");
-        let parsedData = JSON.parse(localData);
-        let editingTodo = parsedData.filter((tod) => tod?.id === id);
-        editingTodo.forEach((EditingElement) => {
-            setEditInput(EditingElement?.task);
-        });
-    };
+    const editTodo = (id) => {};
     //editAndSave
     const editAndSave = (id) => {
         const updated = {
