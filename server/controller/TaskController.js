@@ -31,19 +31,22 @@ const addTask = async (req, res) => {
 const updateTask = async (req, res) => {
     try {
         const { task_id, task, completed } = req.body.data.updatedTask;
+        console.log(req.body);
         const requiredFields = ["task_id", "task", "completed"];
         missingReqBody(requiredFields, req.body.data.updatedTask, res);
-        const updatedResponse = await Task.findByIdAndUpdate(
+        let updatedTask = {
             task_id,
-            {
-                task: task,
-                completed: completed,
-            },
+            task,
+            completed,
+        };
+        const updatedResponse = await Todo.findByIdAndUpdate(
+            task_id,
+            { updatedTask },
             { new: true }
         );
         console.log(updatedResponse);
     } catch (error) {
-        res.status(500).json("failed");
+        res.status(500).json({ message: error });
     }
 };
 const deleteTask = (req, res) => {

@@ -68,10 +68,9 @@ export const Todo = () => {
     };
     //editAndSave
     const editAndSave = async (id) => {
-        console.log("happening");
         const updatedTask = {
             task_id: id,
-            task: "updated-da",
+            task: "updated-testing",
             completed: false,
         };
         const response = await axios.put(
