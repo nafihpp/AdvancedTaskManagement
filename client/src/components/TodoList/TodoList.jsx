@@ -14,17 +14,17 @@ export const TodoList = ({
     editAndSave,
     completeTodo,
 }) => {
-    console.log(todo);
+    console.log(todo, "===heretodo");
     return (
         <div className="completed-todo-container">
-            {todo !== null &&
+            {todo &&
                 todo?.map((tod) => (
-                    <div className="completed-todo-box" key={tod.id}>
-                        {tod?.id && selectedId !== tod.id ? (
+                    <div className="completed-todo-box" key={tod.task_id}>
+                        {tod?.task_id && selectedId !== tod.task_id ? (
                             <div className="box">
                                 <div
                                     className="todo-title"
-                                    onClick={() => completeTodo(tod.id)}
+                                    onClick={() => completeTodo(tod.task_id)}
                                 >
                                     {!tod?.completed ? (
                                         <p className="todo-title-p">
@@ -40,14 +40,14 @@ export const TodoList = ({
                                     <div
                                         className="todo-editIcon-container"
                                         onClick={() => {
-                                            editTodo(tod?.id);
+                                            editTodo(tod?.task_id);
                                         }}
                                     >
                                         <img src={editButton} alt="edit-icon" />
                                     </div>
                                     <div
                                         className="todo-deleteIcon-container"
-                                        onClick={() => deleteTodo(tod?.id)}
+                                        onClick={() => deleteTodo(tod?.task_id)}
                                     >
                                         <img
                                             src={deleteButton}
@@ -57,7 +57,7 @@ export const TodoList = ({
                                 </div>
                             </div>
                         ) : (
-                            tod?.id === selectedId && (
+                            tod?.task_id === selectedId && (
                                 <div className="edit-todo-container">
                                     <div className="edit-box">
                                         <input
@@ -69,7 +69,9 @@ export const TodoList = ({
                                         />
                                         <button
                                             className="save-button"
-                                            onClick={() => editAndSave(tod?.id)}
+                                            onClick={() =>
+                                                editAndSave(tod?.task_id)
+                                            }
                                         >
                                             SAVE
                                         </button>

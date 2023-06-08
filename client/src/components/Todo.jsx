@@ -3,6 +3,9 @@ import { TodoList } from "./TodoList";
 import { useEffect, useRef, useState } from "react";
 import { TodoInput } from "./TodoInput";
 import { v4 as uuidv4 } from "uuid";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const Todo = () => {
     const inputTodoRef = useRef(null);
@@ -21,25 +24,41 @@ export const Todo = () => {
         setInputValue(e.target.value);
     };
     //add todo and update state
-    const addTodo = () => {
+    const addTodo = async () => {
         if (inputValue !== "") {
             let currentTodo = {
-                id: uuidv4(),
+                task_id: uuidv4(),
                 task: inputValue,
                 completed: false,
             };
-            setTodo((prev) => [...prev, currentTodo]);
-            setInputValue("");
+            const response = await axios.post(
+                "http://localhost:6136/api/add-task",
+                {
+                    METHOD: "POST",
+                    data: {
+                        currentTodo,
+                    },
+                }
+            );
+            toast.success(response.data.message);
         } else {
             alert("enter the todo, can't be empty");
         }
     };
     //when adding todo update the localstorage
     useEffect(() => {
-        if (todo?.length > 0) {
-            localStorage.setItem("todos", JSON.stringify(todo));
-        }
+        TaskFetch();
     }, [todo]);
+
+    const TaskFetch = async () => {
+        const response = await axios.get(
+            "http://localhost:6136/api/all-tasks",
+            {
+                METHOD: "GET",
+            }
+        );
+        setTodo(response.data);
+    };
 
     //press enter to add todo
     const handleEnter = (event) => {
@@ -93,14 +112,13 @@ export const Todo = () => {
 
     //delete todo and then update localstorage and state
     const deleteTodo = (id) => {
-        let localData = localStorage.getItem("todos");
-        let parsedData = JSON.parse(localData);
-        let undeleted = parsedData?.filter((todo) => todo?.id !== id);
-        setTodo(undeleted);
+        // let undeleted = parsedData?.filter((todo) => todo?.id !== id);
+        // setTodo(undeleted);
     };
 
     return (
         <div className="todo-container">
+            <ToastContainer />
             <h1>Todo List</h1>
             <div className="todo-input-container">
                 <TodoInput
