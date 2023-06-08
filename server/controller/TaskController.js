@@ -33,7 +33,7 @@ const updateTask = async (req, res) => {
         const { task_id, task, completed } = req.body.data.updatedTask;
         const requiredFields = ["task_id", "task", "completed"];
         missingReqBody(requiredFields, req.body.data.updatedTask, res);
-        const updated = await Task.findByIdAndUpdate(
+        const updatedResponse = await Task.findByIdAndUpdate(
             task_id,
             {
                 task: task,
@@ -41,7 +41,7 @@ const updateTask = async (req, res) => {
             },
             { new: true }
         );
-        console.log(updated, "====");
+        console.log(updatedResponse);
     } catch (error) {
         res.status(500).json("failed");
     }

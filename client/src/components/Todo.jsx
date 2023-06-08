@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { TodoInput } from "./TodoInput";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 export const Todo = () => {
@@ -31,18 +31,15 @@ export const Todo = () => {
                 task: inputValue,
                 completed: false,
             };
-            const response = await axios.post(
-                "http://localhost:6136/api/add-task",
-                {
-                    METHOD: "POST",
-                    data: {
-                        currentTodo,
-                    },
-                }
-            );
+            const response = await axios("http://localhost:6136/api/add-task", {
+                METHOD: "POST",
+                data: {
+                    currentTodo,
+                },
+            });
             toast.success(response.data.message);
         } else {
-            alert("enter the todo, can't be empty");
+            toast("enter the Task, It can't be empty");
         }
     };
     //On Mount fetch all tasks and also update the task list whenever tasks get added
@@ -51,12 +48,9 @@ export const Todo = () => {
     }, [todo]);
 
     const TaskFetch = async () => {
-        const response = await axios.get(
-            "http://localhost:6136/api/all-tasks",
-            {
-                METHOD: "GET",
-            }
-        );
+        const response = await axios("http://localhost:6136/api/all-tasks", {
+            METHOD: "GET",
+        });
         setTodo(response.data);
     };
 
@@ -74,21 +68,22 @@ export const Todo = () => {
     };
     //editAndSave
     const editAndSave = async (id) => {
+        console.log("happening");
         const updatedTask = {
-            id: id,
-            task: editInput,
+            task_id: id,
+            task: "updated-da",
             completed: false,
         };
-        const response = await axios.post(
-            "http://localhost:6136/api/add-task",
+        const response = await axios.put(
+            "http://localhost:6136/api/update-task",
             {
-                METHOD: "POST",
+                METHOD: "PUT",
                 data: {
                     updatedTask,
                 },
             }
         );
-
+        console.log(response);
         setSelectedId();
     };
     //completeTodo
