@@ -13,7 +13,6 @@ export const TodoList = ({
     editAndSave,
     completeTodo,
 }) => {
-    console.log(todo, "===heretodo");
     return (
         <div className="completed-todo-container">
             {todo &&

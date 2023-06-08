@@ -32,14 +32,14 @@ const updateTask = async (req, res) => {
     try {
         const { task_id, task, completed } = req.body.data.updatedTask;
         console.log(req.body);
-        const requiredFields = ["task_id", "task", "completed"];
-        missingReqBody(requiredFields, req.body.data.updatedTask, res);
+        // const requiredFields = ["task_id", "task", "completed"];
+        // missingReqBody(requiredFields, req.body.data.updatedTask, res);
         let updatedTask = {
             task_id,
             task,
             completed,
         };
-        const updatedResponse = await Todo.findByIdAndUpdate(
+        const updatedResponse = await Task.findByIdAndUpdate(
             task_id,
             { updatedTask },
             { new: true }

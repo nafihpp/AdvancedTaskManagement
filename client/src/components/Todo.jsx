@@ -49,7 +49,7 @@ export const Todo = () => {
 
     const TaskFetch = async () => {
         const response = await axios("http://localhost:6136/api/all-tasks", {
-            METHOD: "GET",
+            method: "GET",
         });
         setTodo(response.data);
     };
@@ -73,15 +73,12 @@ export const Todo = () => {
             task: "updated-testing",
             completed: false,
         };
-        const response = await axios.put(
-            "http://localhost:6136/api/update-task",
-            {
-                METHOD: "PUT",
-                data: {
-                    updatedTask,
-                },
-            }
-        );
+        const response = await axios("http://localhost:6136/api/update-task", {
+            method: "PUT",
+            data: {
+                updatedTask,
+            },
+        });
         console.log(response);
         setSelectedId();
     };
