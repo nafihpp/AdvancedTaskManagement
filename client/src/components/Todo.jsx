@@ -45,7 +45,7 @@ export const Todo = () => {
             alert("enter the todo, can't be empty");
         }
     };
-    //when adding todo update the localstorage
+    //On Mount fetch all tasks and also update the task list whenever tasks get added
     useEffect(() => {
         TaskFetch();
     }, [todo]);
@@ -69,23 +69,26 @@ export const Todo = () => {
     };
 
     //edit Button
-    const editTodo = (id) => {};
+    const editTodo = (id) => {
+        setSelectedId(id);
+    };
     //editAndSave
-    const editAndSave = (id) => {
-        const updated = {
+    const editAndSave = async (id) => {
+        const updatedTask = {
             id: id,
             task: editInput,
             completed: false,
         };
-
-        const updatedTodo = todo?.map((tod) => {
-            if (tod.id === id) {
-                return updated;
-            } else {
-                return tod;
+        const response = await axios.post(
+            "http://localhost:6136/api/add-task",
+            {
+                METHOD: "POST",
+                data: {
+                    updatedTask,
+                },
             }
-        });
-        setTodo(updatedTodo);
+        );
+
         setSelectedId();
     };
     //completeTodo

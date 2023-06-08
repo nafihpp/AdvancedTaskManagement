@@ -30,9 +30,9 @@ const addTask = async (req, res) => {
 };
 const updateTask = async (req, res) => {
     try {
-        const { task_id, task, completed } = req.body.updatedTodo;
+        const { task_id, task, completed } = req.body.data.updatedTask;
         const requiredFields = ["task_id", "task", "completed"];
-        missingReqBody(requiredFields, req.body.data.currentTodo, res);
+        missingReqBody(requiredFields, req.body.data.updatedTask, res);
         const updated = await Task.findByIdAndUpdate(
             task_id,
             {
