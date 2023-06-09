@@ -1,11 +1,11 @@
 const express = require("express");
-const dotenv = require("dotenv");
+require("dotenv").config();
 const cors = require("cors");
-const app = express();
 const { connectDb } = require("./config/dbConfig");
-dotenv.config();
+
+const app = express();
 //Port
-const PORT = process.env.PORT | 6000;
+const PORT = process.env.PORT;
 //routes import
 const TaskRoutes = require("./routes/TaskRoutes");
 

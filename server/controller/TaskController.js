@@ -13,10 +13,11 @@ const getAllTask = async (req, res) => {
 };
 const addTask = async (req, res) => {
     try {
-        const { task_id, task, completed } = req.body.data.currentTodo;
+        const { task_id, task, completed } = req.body.currentTodo;
+        console.log(req.body);
         const requiredFields = ["task_id", "task", "completed"];
-        missingReqBody(requiredFields, req.body.data.currentTodo, res);
-        let Newtask = {
+        missingReqBody(requiredFields, req.body.currentTodo, res);
+        const Newtask = {
             task_id,
             task,
             completed,
@@ -25,7 +26,7 @@ const addTask = async (req, res) => {
         console.log(NewTaskResponse);
         return res.status(200).json({ message: "successfully added task" });
     } catch (error) {
-        res.status(500).json({ message: "error found" });
+        res.status(500).json({ message: error.message });
     }
 };
 const updateTask = async (req, res) => {
@@ -38,7 +39,7 @@ const updateTask = async (req, res) => {
                 .status(404)
                 .json({ message: `Updating Task can't be empty` });
         }
-        let updatedTask = {
+        const updatedTask = {
             task_id,
             task,
             completed,
@@ -53,9 +54,22 @@ const updateTask = async (req, res) => {
         res.status(500).json({ message: error });
     }
 };
-const deleteTask = (req, res) => {
+const deleteTask = async (req, res) => {
     try {
-        console.log(req.query.id);
+        const delete_id = req.query.remove;
+        const isExist = await Task.findOne({ task_id: delete_id }).select(
+            "task_id task completed"
+        );
+
+        if (isExist) {
+            const response = await Task.deleteOne({ task_id: delete_id });
+            return res
+                .status(200)
+                .json({ message: "Task Removed Successfully" });
+        }
+        return res
+            .status(404)
+            .json({ message: "Task not found to be deleted" });
     } catch (error) {}
 };
 
@@ -76,9 +90,9 @@ const markAsComplete = async (req, res) => {
                 { $set: completed },
                 { new: true }
             );
-            return res.status(200).json({
-                message: `task is set to ${
-                    isExist.completed === true ? "completed" : "Not-Completed"
+            return res.status(!isExist.completed === true ? 200 : 301).json({
+                message: `${isExist.task} is set to ${
+                    !isExist.completed === true ? "completed" : "unfinished"
                 }`,
             });
         }

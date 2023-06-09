@@ -14,7 +14,7 @@ export const Todo = () => {
     const [todo, setTodo] = useState([]);
     const [inputValue, setInputValue] = useState("");
 
-    //OnMount gets all the todos from local storage and set to todo
+    //onMount focus to the input
     useEffect(() => {
         inputTodoRef.current.focus();
     }, []);
@@ -32,12 +32,14 @@ export const Todo = () => {
                 completed: false,
             };
             const response = await axios("http://localhost:6136/api/add-task", {
-                METHOD: "POST",
+                method: "POST",
                 data: {
                     currentTodo,
                 },
             });
             toast.success(response.data.message);
+            setInputValue("");
+            TaskFetch();
         } else {
             toast("enter the Task, It can't be empty");
         }
@@ -89,23 +91,36 @@ export const Todo = () => {
                 toast.success(response.data.message);
             }
             setSelectedId();
+            TaskFetch();
         } catch (error) {
             toast.error(error.response.data.message);
         }
     };
     //completeTodo
     const completeTodo = async (id) => {
-        const response = await axios(
-            `http://localhost:6136/api/mark-as-complete/${id}`,
-            {
-                method: "POST",
-            }
-        );
-        console.log(response);
+        try {
+            const response = await axios(
+                `http://localhost:6136/api/mark-as-complete/${id}`,
+                {
+                    method: "POST",
+                }
+            );
+            toast.success(response.data.message);
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+
+        TaskFetch();
     };
 
     //delete todo and then update localstorage and state
-    const deleteTodo = (id) => {};
+    const deleteTodo = async (id) => {
+        await axios(`http://localhost:6136/api/remove-task`, {
+            method: "DELETE",
+            params: { remove: id },
+        });
+        TaskFetch();
+    };
 
     return (
         <div className="todo-container">
