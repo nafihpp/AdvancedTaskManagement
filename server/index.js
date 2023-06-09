@@ -17,5 +17,5 @@ connectDb();
 app.use("/api", TaskRoutes);
 
 app.listen(PORT, () => {
-    console.log(`server running in ${PORT}.............`);
+    console.log(`server running in ${PORT}`);
 });
