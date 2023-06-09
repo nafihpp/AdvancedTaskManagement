@@ -14,6 +14,8 @@ export const Todo = () => {
     const [todo, setTodo] = useState([]);
     const [inputValue, setInputValue] = useState("");
 
+    const BASE_URL = import.meta.env.VITE_BASE_URL;
+
     //onMount focus to the input
     useEffect(() => {
         inputTodoRef.current.focus();
@@ -31,7 +33,7 @@ export const Todo = () => {
                 task: inputValue,
                 completed: false,
             };
-            const response = await axios("http://localhost:6136/api/add-task", {
+            const response = await axios(`${BASE_URL}/api/add-task`, {
                 method: "POST",
                 data: {
                     currentTodo,
@@ -50,7 +52,7 @@ export const Todo = () => {
     }, []);
 
     const TaskFetch = async () => {
-        const response = await axios("http://localhost:6136/api/all-tasks", {
+        const response = await axios(`${BASE_URL}/api/all-tasks`, {
             method: "GET",
         });
         setTodo(response.data);
@@ -76,17 +78,14 @@ export const Todo = () => {
                 task: editInput,
                 completed: false,
             };
-            const response = await axios(
-                "http://localhost:6136/api/update-task",
-                {
-                    method: "PUT",
+            const response = await axios(`${BASE_URL}/api/update-task`, {
+                method: "PUT",
+                data: {
                     data: {
-                        data: {
-                            updatedTask,
-                        },
+                        updatedTask,
                     },
-                }
-            );
+                },
+            });
             if (response.status === 200) {
                 toast.success(response.data.message);
             }
@@ -100,7 +99,7 @@ export const Todo = () => {
     const completeTodo = async (id) => {
         try {
             const response = await axios(
-                `http://localhost:6136/api/mark-as-complete/${id}`,
+                `${BASE_URL}/api/mark-as-complete/${id}`,
                 {
                     method: "POST",
                 }
@@ -115,7 +114,7 @@ export const Todo = () => {
 
     //delete todo and then update localstorage and state
     const deleteTodo = async (id) => {
-        await axios(`http://localhost:6136/api/remove-task`, {
+        await axios(`${BASE_URL}/api/remove-task`, {
             method: "DELETE",
             params: { remove: id },
         });
