@@ -31,30 +31,65 @@ const addTask = async (req, res) => {
 const updateTask = async (req, res) => {
     try {
         const { task_id, task, completed } = req.body.data.updatedTask;
-        console.log(req.body);
-        // const requiredFields = ["task_id", "task", "completed"];
-        // missingReqBody(requiredFields, req.body.data.updatedTask, res);
+        const requiredFields = ["task_id", "task", "completed"];
+        missingReqBody(requiredFields, req.body.data.updatedTask, res);
+        if (task === "") {
+            return res
+                .status(404)
+                .json({ message: `Updating Task can't be empty` });
+        }
         let updatedTask = {
             task_id,
             task,
             completed,
         };
-        const updatedResponse = await Task.findByIdAndUpdate(
-            task_id,
-            { updatedTask },
-            { new: true }
-        );
-        console.log(updatedResponse);
+        const isExist = await Task.findOne({ task_id: task_id });
+        if (isExist) {
+            await Task.updateOne({ task_id: task_id }, { $set: updatedTask });
+            return res.status(200).json({ message: `updated Successfully` });
+        }
+        return res.status(404).json({ message: "Failed to update the task" });
     } catch (error) {
         res.status(500).json({ message: error });
     }
 };
 const deleteTask = (req, res) => {
-    console.log("HI");
+    try {
+        console.log(req.query.id);
+    } catch (error) {}
+};
+
+const markAsComplete = async (req, res) => {
+    try {
+        const task_id = req.params.id;
+        const isExist = await Task.findOne({ task_id: task_id }).select(
+            "task_id task completed"
+        );
+        if (isExist) {
+            let completed = {
+                task_id: task_id,
+                task: isExist.task,
+                completed: !isExist.completed,
+            };
+            await Task.updateOne(
+                { task_id: task_id },
+                { $set: completed },
+                { new: true }
+            );
+            return res.status(200).json({
+                message: `task is set to ${
+                    isExist.completed === true ? "completed" : "Not-Completed"
+                }`,
+            });
+        }
+    } catch (error) {
+        res.status(500).status({ message: "System error" });
+    }
 };
 module.exports = {
     getAllTask,
     addTask,
     updateTask,
     deleteTask,
+    markAsComplete,
 };

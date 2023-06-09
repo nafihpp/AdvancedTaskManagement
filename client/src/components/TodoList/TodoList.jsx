@@ -59,7 +59,6 @@ export const TodoList = ({
                                 <div className="edit-todo-container">
                                     <div className="edit-box">
                                         <input
-                                            value={tod.task}
                                             onChange={(e) =>
                                                 setEditInput(e.target.value)
                                             }

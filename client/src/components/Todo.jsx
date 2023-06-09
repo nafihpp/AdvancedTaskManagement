@@ -45,7 +45,7 @@ export const Todo = () => {
     //On Mount fetch all tasks and also update the task list whenever tasks get added
     useEffect(() => {
         TaskFetch();
-    }, [todo]);
+    }, []);
 
     const TaskFetch = async () => {
         const response = await axios("http://localhost:6136/api/all-tasks", {
@@ -62,45 +62,50 @@ export const Todo = () => {
         }
     };
 
-    //edit Button
+    //edit Button which Enable Editing screen
     const editTodo = (id) => {
         setSelectedId(id);
     };
     //editAndSave
     const editAndSave = async (id) => {
-        const updatedTask = {
-            task_id: id,
-            task: "updated-testing",
-            completed: false,
-        };
-        const response = await axios("http://localhost:6136/api/update-task", {
-            method: "PUT",
-            data: {
-                updatedTask,
-            },
-        });
-        console.log(response);
-        setSelectedId();
+        try {
+            const updatedTask = {
+                task_id: id,
+                task: editInput,
+                completed: false,
+            };
+            const response = await axios(
+                "http://localhost:6136/api/update-task",
+                {
+                    method: "PUT",
+                    data: {
+                        data: {
+                            updatedTask,
+                        },
+                    },
+                }
+            );
+            if (response.status === 200) {
+                toast.success(response.data.message);
+            }
+            setSelectedId();
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
     };
     //completeTodo
-    const completeTodo = (id) => {
-        const complete = todo?.map((tod) => {
-            if (tod.id === id && tod.completed === true) {
-                return { ...tod, completed: false };
-            } else if (tod.id === id) {
-                return { ...tod, completed: true };
-            } else {
-                return tod;
+    const completeTodo = async (id) => {
+        const response = await axios(
+            `http://localhost:6136/api/mark-as-complete/${id}`,
+            {
+                method: "POST",
             }
-        });
-        setTodo(complete);
+        );
+        console.log(response);
     };
 
     //delete todo and then update localstorage and state
-    const deleteTodo = (id) => {
-        // let undeleted = parsedData?.filter((todo) => todo?.id !== id);
-        // setTodo(undeleted);
-    };
+    const deleteTodo = (id) => {};
 
     return (
         <div className="todo-container">
