@@ -1,5 +1,7 @@
 # AdvancedTaskManagement
 
+![todoloccal](https://user-images.githubusercontent.com/49452140/236644579-2ef317c2-8b8f-428d-a1a4-33ac92963c5e.jpg)
+
 ## Technology
 - React JS
 - Backend - Express JS
@@ -7,7 +9,6 @@
 - Hosting - Frontend(Vercel)
 - Hosting - Backend(Render)
 
-![todoloccal](https://user-images.githubusercontent.com/49452140/236644579-2ef317c2-8b8f-428d-a1a4-33ac92963c5e.jpg)
 
 ## API Reference
 
